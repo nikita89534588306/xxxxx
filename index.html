@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="contact">
+        <a href="#">Малахова Мария Витальевна</a>
+    </div>
+    <div class="contact">
+        <a href="#">Санина Ольга Егоровна</a>
+    </div>
+    <div class="contact">
+        <a href="#">Узбек Мария Витальевна</a>
+    </div>
+</body>
+<style>
+    .contact-contextMenu{
+        background-color: aquamarine;
+        border: 1px solid black;
+        height:35px;
+        width: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+</style>
+<script>
+    let handlerContextMenu = function(){
+        event.preventDefault();
+
+        const selectedContact = this;
+
+        selectedContact.isOpenContextMenu = function(){
+
+            for (let oneChild of this.children){ 
+                for(let nameClass of oneChild.classList) 
+                    if(nameClass==="contact-contextMenu") return true
+            }
+            return false
+
+        }
+
+        selectedContact.showContextMenu  = function(){
+
+            this.allItemnsContextMenu = []
+
+            let contextMenu = document.createElement('div');
+            contextMenu.classList.add('contact-contextMenu');
+            this.append(contextMenu)
+            this.allItemnsContextMenu.push(contextMenu)
+
+            let deliteBtn = document.createElement('button');
+            deliteBtn.innerHTML = 'Удалить контакт';
+            contextMenu.append(deliteBtn)
+            this.allItemnsContextMenu.push(deliteBtn)
+        }
+        
+        selectedContact.hideContextMenu  = function(){
+            for(let oneItem of this.allItemnsContextMenu) oneItem.remove()
+        }
+
+        if(selectedContact.isOpenContextMenu()===false)  selectedContact.showContextMenu()
+        else if (selectedContact.isOpenContextMenu()===true) selectedContact.hideContextMenu()
+
+       }
+
+
+
+    //получаем все ссылки в документе
+    var contacts = document.querySelectorAll('.contact');
+    //перебираем элементы массива
+    for(let thisContact of contacts) 
+        //добавляем обработчик нажатия на ссылку правой кнопкой мыши
+        thisContact.oncontextmenu = handlerContextMenu
+
+    
+
+</script>
+</html>
