@@ -8,7 +8,7 @@ class ContextMenu{
     get isOpen (){ return this.path.className.split(' ').includes("show")  }
 
     open = function(){  
-
+        contactList.closeContextMenuContacts()
         this.path.classList.add("show")
 
         window.addEventListener('click', function closeContextMenuContact(){
